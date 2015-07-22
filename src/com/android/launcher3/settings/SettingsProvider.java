@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2013 The CyanogenMod Project
+ * Copyright (C) 2013 The MoKee OpenSource Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,6 +30,7 @@ public final class SettingsProvider {
     public static final String SETTINGS_UI_HOMESCREEN_HIDE_ICON_LABELS = "ui_homescreen_general_hide_icon_labels";
     public static final String SETTINGS_UI_HOMESCREEN_SCROLLING_TRANSITION_EFFECT = "ui_homescreen_scrolling_transition_effect";
     public static final String SETTINGS_UI_HOMESCREEN_SCROLLING_WALLPAPER_SCROLL = "ui_homescreen_scrolling_wallpaper_scroll";
+    public static final String SETTINGS_UI_HOMESCREEN_EXPAND_STATUSBAR = "ui_homescreen_expand_statusbar";
     public static final String SETTINGS_UI_HOMESCREEN_SCROLLING_PAGE_OUTLINES = "ui_homescreen_scrolling_page_outlines";
     public static final String SETTINGS_UI_HOMESCREEN_SCROLLING_FADE_ADJACENT = "ui_homescreen_scrolling_fade_adjacent";
     public static final String SETTINGS_UI_DYNAMIC_GRID_SIZE = "ui_dynamic_grid_size";

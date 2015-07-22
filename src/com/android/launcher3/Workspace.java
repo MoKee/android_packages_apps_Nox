@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2008 The Android Open Source Project
+ * Copyright (C) 2015 The MoKee OpenSource Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +27,7 @@ import android.animation.PropertyValuesHolder;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
+import android.app.StatusBarManager;
 import android.app.WallpaperManager;
 import android.appwidget.AppWidgetHostView;
 import android.appwidget.AppWidgetProviderInfo;
@@ -111,6 +113,8 @@ public class Workspace extends SmoothPagedView
     private static final int FLING_THRESHOLD_VELOCITY = 500;
 
     private static final float ALPHA_CUTOFF_THRESHOLD = 0.01f;
+
+    private static final float MIN_FLING_DOWN_DISTANCE = 200f;
 
     static final boolean MAP_NO_RECURSE = false;
     static final boolean MAP_RECURSE = true;
@@ -230,6 +234,8 @@ public class Workspace extends SmoothPagedView
     private boolean mWallpaperIsLiveWallpaper;
     private int mNumPagesForWallpaperParallax;
     private float mLastSetWallpaperOffsetSteps = 0;
+
+    private boolean mExpandStatusbar;
 
     private Runnable mDelayedResizeRunnable;
 
@@ -1143,6 +1149,12 @@ public class Workspace extends SmoothPagedView
         return super.dispatchUnhandledMove(focused, direction);
     }
 
+    private void expandStatusBar() {
+        StatusBarManager sbm = (StatusBarManager) mLauncher
+                .getSystemService(Context.STATUS_BAR_SERVICE);
+        sbm.expandNotificationsPanel();
+    }
+
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         switch (ev.getAction() & MotionEvent.ACTION_MASK) {
@@ -1157,6 +1169,14 @@ public class Workspace extends SmoothPagedView
                 final CellLayout currentPage = (CellLayout) getChildAt(mCurrentPage);
                 if (currentPage != null && !currentPage.lastDownOnOccupiedCell()) {
                     onWallpaperTap(ev);
+                }
+            }
+            if (!mIsDragOccuring && mTouchState != TOUCH_STATE_SCROLLING
+                    && mExpandStatusbar && mState != State.OVERVIEW) {
+                float mYDown2 = ev.getY();
+                float deltaY = mYDown2 - mYDown;
+                if (deltaY >= MIN_FLING_DOWN_DISTANCE) {
+                    expandStatusBar();
                 }
             }
         }
@@ -5343,6 +5363,10 @@ public class Workspace extends SmoothPagedView
         mScrollWallpaper = SettingsProvider.getBoolean(mLauncher,
                 SettingsProvider.SETTINGS_UI_HOMESCREEN_SCROLLING_WALLPAPER_SCROLL,
                 R.bool.preferences_interface_homescreen_scrolling_wallpaper_scroll_default);
+
+        mExpandStatusbar = SettingsProvider.getBoolean(mLauncher,
+                SettingsProvider.SETTINGS_UI_HOMESCREEN_EXPAND_STATUSBAR,
+                R.bool.preferences_interface_homescreen_expand_statusbar_default);
 
         if (!mScrollWallpaper) {
             if (mWindowToken != null) mWallpaperManager.setWallpaperOffsets(mWindowToken, 0f, 0.5f);
