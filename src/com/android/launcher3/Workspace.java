@@ -1150,8 +1150,7 @@ public class Workspace extends SmoothPagedView
     }
 
     private void expandStatusBar() {
-        StatusBarManager sbm = (StatusBarManager) mLauncher
-                .getSystemService(Context.STATUS_BAR_SERVICE);
+        StatusBarManager sbm = (StatusBarManager) mLauncher.getSystemService(Context.STATUS_BAR_SERVICE);
         sbm.expandNotificationsPanel();
     }
 

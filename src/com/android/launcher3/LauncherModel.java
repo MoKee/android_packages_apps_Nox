@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2008 The Android Open Source Project
+ * Copyright (C) 2015 The MoKee OpenSource Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -2780,7 +2781,7 @@ public class LauncherModel extends BroadcastReceiver
             ArrayList<ComponentName> mHiddenApps = new ArrayList<ComponentName>();
             ArrayList<String> mHiddenAppsPackages = new ArrayList<String>();
             Context context = mApp.getContext();
-            // Since MoKeeLauncher is compiled using the SDK we have to hardcode this string
+            // Since Nox is compiled using the SDK we have to hardcode this string
             String protectedComponents = Settings.Secure.getString(context.getContentResolver(),
                     SETTINGS_PROTECTED_COMPONENTS);
             protectedComponents = protectedComponents == null ? "" : protectedComponents;

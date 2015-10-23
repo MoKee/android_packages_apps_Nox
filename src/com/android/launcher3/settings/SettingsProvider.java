@@ -21,7 +21,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public final class SettingsProvider {
-    public static final String SETTINGS_KEY = "launcher_preferences";
+    public static final String SETTINGS_KEY = "nox_preferences";
 
     public static final String SETTINGS_CHANGED = "settings_changed";
 

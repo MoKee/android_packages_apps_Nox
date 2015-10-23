@@ -16,7 +16,7 @@
 -->
 <resources>
     <!-- Application name -->
-    <string name="mk_application_name" translatable="false">MoKeeLauncher</string>
+    <string name="mk_application_name" translatable="false">Nox</string>
 
     <!-- Expand status bar anywhere on home screen -->
     <string name="expand_statusbar">Expand status bar anywhere</string>

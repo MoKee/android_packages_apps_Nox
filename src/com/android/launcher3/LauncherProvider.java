@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2008 The Android Open Source Project
+ * Copyright (C) 2015 The MoKee OpenSource Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -824,12 +825,12 @@ public class LauncherProvider extends ContentProvider {
                     db.endTransaction();
                 }
             }
-            // This was the old L2-based MoKeeLauncher's version. Do steps that come after version 12 
+            // This was the old L2-based Nox's version. Do steps that come after version 12 
             // (Launcher2's original version) so the new things get added, but skip the intermediate
             // workspaceScreens updates (addWorkspacesTable() takes care of that)
 
             if (version == 16) {
-                Log.w(TAG, "Found pre-44 MoKeeLauncher, preparing update");
+                Log.w(TAG, "Found pre-44 Nox, preparing update");
 
                 // With the new shrink-wrapped and re-orderable workspaces, it makes sense
                 // to persist workspace screens and their relative order.
