@@ -77,11 +77,11 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         View.OnFocusChangeListener {
     private static final String TAG = "Launcher.Folder";
 
-    private static final String PROTECTED_ACTION = "cyanogenmod.intent.action.PACKAGE_PROTECTED";
+    private static final String PROTECTED_ACTION = "mokee.intent.action.PACKAGE_PROTECTED";
     private static final String PROTECTED_STATE =
-            "cyanogenmod.intent.action.PACKAGE_PROTECTED_STATE";
+            "mokee.intent.action.PACKAGE_PROTECTED_STATE";
     private static final String PROTECTED_COMPONENTS =
-            "cyanogenmod.intent.action.PACKAGE_PROTECTED_COMPONENTS";
+            "mokee.intent.action.PACKAGE_PROTECTED_COMPONENTS";
 
     protected DragController mDragController;
     protected Launcher mLauncher;

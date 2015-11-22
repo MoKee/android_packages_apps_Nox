@@ -580,9 +580,9 @@ public class Launcher extends Activity
         }
 
         IntentFilter protectedAppsFilter = new IntentFilter(
-                "cyanogenmod.intent.action.PROTECTED_COMPONENT_UPDATE");
+                "mokee.intent.action.PROTECTED_COMPONENT_UPDATE");
         registerReceiver(protectedAppsChangedReceiver, protectedAppsFilter,
-                "cyanogenmod.permission.PROTECTED_APP", null);
+                "mokee.permission.PROTECTED_APP", null);
     }
 
     private LauncherCallbacks mLauncherCallbacks;
