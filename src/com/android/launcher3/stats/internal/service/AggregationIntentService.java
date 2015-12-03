@@ -30,7 +30,6 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherApplication;
-import com.android.launcher3.stats.external.StatsUtil;
 import com.android.launcher3.stats.external.TrackingBundle;
 import com.android.launcher3.stats.internal.db.DatabaseHelper;
 import com.android.launcher3.stats.internal.model.CountAction;
@@ -154,7 +153,6 @@ public class AggregationIntentService extends IntentService {
                 .createTrackingBundle(TRACKING_ID, TrackingEvent.Category.HOMESCREEN_PAGE.name(),
                         "count");
         bundle.putString(TrackingEvent.KEY_VALUE, String.valueOf(pageCount));
-        StatsUtil.sendEvent(this, bundle);
     }
 
     private void sendWidgetCountStats() {
@@ -165,11 +163,9 @@ public class AggregationIntentService extends IntentService {
         Bundle bundle = TrackingBundle
                 .createTrackingBundle(TRACKING_ID, TrackingEvent.Category.WIDGET.name(), "count");
         bundle.putString(TrackingEvent.KEY_VALUE, String.valueOf(widgetCount));
-        StatsUtil.sendEvent(this, bundle);
     }
 
     private void performTrackingCall(Bundle bundle) throws IllegalArgumentException {
-        StatsUtil.sendEvent(this, bundle);
     }
 
     private void unscheduleService() {
