@@ -71,10 +71,10 @@ import com.android.launcher3.settings.SettingsProvider;
 import com.android.launcher3.util.Thunk;
 import com.android.launcher3.util.UiThreadCircularReveal;
 
-import static cyanogenmod.content.Intent.ACTION_PROTECTED;
-import static cyanogenmod.content.Intent.ACTION_PROTECTED_CHANGED;
-import static cyanogenmod.content.Intent.EXTRA_PROTECTED_COMPONENTS;
-import static cyanogenmod.content.Intent.EXTRA_PROTECTED_STATE;
+import static mokee.content.Intent.ACTION_PROTECTED;
+import static mokee.content.Intent.ACTION_PROTECTED_CHANGED;
+import static mokee.content.Intent.EXTRA_PROTECTED_COMPONENTS;
+import static mokee.content.Intent.EXTRA_PROTECTED_STATE;
 
 import java.util.ArrayList;
 import java.util.Collections;

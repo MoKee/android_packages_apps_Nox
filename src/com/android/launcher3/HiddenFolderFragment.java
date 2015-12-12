@@ -137,7 +137,7 @@ public class HiddenFolderFragment extends Fragment {
         Launcher launcher = (Launcher) getActivity();
         LinearLayout.LayoutParams llp =
                 (LinearLayout.LayoutParams) mListView.getLayoutParams();
-        // TODO: Uncomment this once the Settings for Trebuchet are merged
+        // TODO: Uncomment this once the Settings for Nox are merged
         /*llp.bottomMargin += ((FrameLayout.LayoutParams) launcher.getOverviewPanel()
                 .findViewById(R.id.settings_container).getLayoutParams()).bottomMargin;*/
         mListView.setLayoutParams(llp);

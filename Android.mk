@@ -26,7 +26,7 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_STATIC_JAVA_LIBRARIES := \
     android-support-v4 \
     android-support-v7-recyclerview \
-    org.cyanogenmod.platform.internal
+    org.mokee.platform.internal
 
 LOCAL_SRC_FILES := $(call all-java-files-under, src) \
     $(call all-java-files-under, WallpaperPicker/src) \
@@ -45,11 +45,11 @@ LOCAL_AAPT_FLAGS := \
     --extra-packages android.support.v7.recyclerview
 
 LOCAL_SDK_VERSION := current
-LOCAL_PACKAGE_NAME := Trebuchet
+LOCAL_PACKAGE_NAME := Nox
 LOCAL_PRIVILEGED_MODULE := true
 #LOCAL_CERTIFICATE := shared
 
-LOCAL_AAPT_FLAGS += --rename-manifest-package com.cyanogenmod.trebuchet
+LOCAL_AAPT_FLAGS += --rename-manifest-package com.mokee.nox
 
 LOCAL_OVERRIDES_PACKAGES := Launcher3
 

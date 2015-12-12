@@ -20,7 +20,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public final class SettingsProvider {
-    public static final String SETTINGS_KEY = "trebuchet_preferences";
+    public static final String SETTINGS_KEY = "nox_preferences";
     public static final String SETTINGS_CHANGED = "settings_changed";
 
     public static final String SETTINGS_UI_HOMESCREEN_DEFAULT_SCREEN_ID = "ui_homescreen_default_screen_id";

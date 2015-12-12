@@ -62,7 +62,7 @@ import com.android.launcher3.util.CursorIconInfo;
 import com.android.launcher3.util.LongArrayMap;
 import com.android.launcher3.util.ManagedProfileHeuristic;
 import com.android.launcher3.util.Thunk;
-import cyanogenmod.providers.CMSettings;
+import mokee.providers.MKSettings;
 
 import java.lang.ref.WeakReference;
 import java.net.URISyntaxException;
@@ -2602,8 +2602,8 @@ public class LauncherModel extends BroadcastReceiver
             ArrayList<ComponentName> mHiddenApps = new ArrayList<ComponentName>();
             ArrayList<String> mHiddenAppsPackages = new ArrayList<String>();
             Context context = mApp.getContext();
-            String protectedComponents = CMSettings.Secure.getString(context.getContentResolver(),
-                    CMSettings.Secure.PROTECTED_COMPONENTS);
+            String protectedComponents = MKSettings.Secure.getString(context.getContentResolver(),
+                    MKSettings.Secure.PROTECTED_COMPONENTS);
             protectedComponents = protectedComponents == null ? "" : protectedComponents;
             String[] flattened = protectedComponents.split("\\|");
 

@@ -18,7 +18,7 @@ package com.android.launcher3;
 
 import android.content.ComponentName;
 import android.content.Context;
-import cyanogenmod.providers.CMSettings;
+import mokee.providers.MKSettings;
 
 import java.util.ArrayList;
 
@@ -31,13 +31,13 @@ public class ProtectedComponentsHelper {
     private static ArrayList<String> sProtectedPackages = new ArrayList<String>();
 
     /**
-     * Gets the list of protected components from {@link CMSettings} and updates the existing list
+     * Gets the list of protected components from {@link MKSettings} and updates the existing list
      * of protected apps and packages
      * @param context Context
      */
     public static void updateProtectedComponentsLists(Context context) {
-        String protectedComponents = CMSettings.Secure.getString(context.getContentResolver(),
-                CMSettings.Secure.PROTECTED_COMPONENTS);
+        String protectedComponents = MKSettings.Secure.getString(context.getContentResolver(),
+                MKSettings.Secure.PROTECTED_COMPONENTS);
         protectedComponents = protectedComponents == null ? "" : protectedComponents;
         String [] flattened = protectedComponents.split("\\|");
         sProtectedApps = new ArrayList<ComponentName>(flattened.length);

@@ -24,7 +24,7 @@ import com.android.launcher3.settings.SettingsProvider;
 
 public class SettingsPinnedHeaderAdapter extends PinnedHeaderListAdapter {
     public static final String ACTION_SEARCH_BAR_VISIBILITY_CHANGED =
-            "cyanogenmod.intent.action.SEARCH_BAR_VISIBILITY_CHANGED";
+            "mokee.intent.action.SEARCH_BAR_VISIBILITY_CHANGED";
 
     private Launcher mLauncher;
     private Context mContext;

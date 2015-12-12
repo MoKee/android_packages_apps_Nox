@@ -15,9 +15,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- Application name -->
-    <string name="cm_application_name" translatable="false">Trebuchet</string>
-
     <string name="home_screen_settings">HOME SCREEN SETTINGS</string>
     <string name="drawer_settings">DRAWER SETTINGS</string>
     <string name="app_settings">APP SETTINGS</string>

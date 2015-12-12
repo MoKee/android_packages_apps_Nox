@@ -677,7 +677,7 @@ public class LauncherProvider extends ContentProvider {
                 }
                 case 16: {
 
-                    Log.w(TAG, "Found pre-11 Trebuchet, preparing update");
+                    Log.w(TAG, "Found pre-11 Nox, preparing update");
 
                     // With the new shrink-wrapped and re-orderable workspaces, it makes sense
                     // to persist workspace screens and their relative order.

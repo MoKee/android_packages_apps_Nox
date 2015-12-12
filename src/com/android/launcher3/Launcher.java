@@ -584,9 +584,9 @@ public class Launcher extends Activity
         }
 
         IntentFilter protectedAppsFilter = new IntentFilter(
-                cyanogenmod.content.Intent.ACTION_PROTECTED_CHANGED);
+                mokee.content.Intent.ACTION_PROTECTED_CHANGED);
         registerReceiver(protectedAppsChangedReceiver, protectedAppsFilter,
-                cyanogenmod.platform.Manifest.permission.PROTECTED_APP, null);
+                mokee.platform.Manifest.permission.PROTECTED_APP, null);
 
         IntentFilter searchBarVisibilityFilter = new IntentFilter(
                 SettingsPinnedHeaderAdapter.ACTION_SEARCH_BAR_VISIBILITY_CHANGED);
