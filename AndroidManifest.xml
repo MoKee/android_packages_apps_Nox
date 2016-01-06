@@ -69,7 +69,6 @@
     <uses-permission android:name="mokee.permission.PROTECTED_APP" />
 
     <application
-        android:name="com.android.launcher3.LauncherApplication"
         android:allowBackup="@bool/enable_backup"
         android:backupAgent="com.android.launcher3.LauncherBackupAgentHelper"
         android:hardwareAccelerated="true"
@@ -179,14 +178,6 @@
         <service android:name="com.android.launcher3.MemoryTracker"
             android:enabled="@bool/debug_memory_enabled"
             >
-        </service>
-
-        <service
-            android:name="com.android.launcher3.stats.internal.service.AggregationIntentService"
-            android:exported="false">
-            <intent-filter>
-               <action android:name="com.cyanogenmod.trebuchet.AGGREGATE_AND_TRACK" />
-            </intent-filter>
         </service>
 
         <receiver

@@ -111,8 +111,6 @@ import com.android.launcher3.compat.UserManagerCompat;
 import com.android.launcher3.list.SettingsPinnedHeaderAdapter;
 import com.android.launcher3.model.WidgetsModel;
 import com.android.launcher3.settings.SettingsProvider;
-import com.android.launcher3.stats.LauncherStats;
-import com.android.launcher3.stats.internal.service.AggregationIntentService;
 import com.android.launcher3.util.ComponentKey;
 import com.android.launcher3.util.LongArrayMap;
 import com.android.launcher3.util.Thunk;
@@ -168,10 +166,6 @@ public class Launcher extends Activity
     private static final int WORKSPACE_BACKGROUND_BLACK = 2;
 
     private static final float BOUNCE_ANIMATION_TENSION = 1.3f;
-
-
-    public static final String LONGPRESS_CHANGE = "wallpaper_changed_by_longpress";
-
 
     /**
      * IntentStarter uses request codes starting with this. This must be greater than all activity
@@ -1340,8 +1334,6 @@ public class Launcher extends Activity
         Intent settings;
         settings = new Intent(android.provider.Settings.ACTION_SETTINGS);
         startActivity(settings);
-        LauncherApplication.getLauncherStats().sendSettingsOpenedEvent(
-                LauncherStats.ORIGIN_TREB_LONGPRESS);
         if (mWorkspace.isInOverviewMode()) {
             mWorkspace.exitOverviewMode();
         }
@@ -2119,9 +2111,6 @@ public class Launcher extends Activity
     public void removeAppWidget(LauncherAppWidgetInfo launcherInfo) {
         removeWidgetToAutoAdvance(launcherInfo.hostView);
         launcherInfo.hostView = null;
-        AppWidgetProviderInfo info = mAppWidgetManager.getAppWidgetInfo(launcherInfo.appWidgetId);
-        String packageName = info.providerInfo.packageName;
-        LauncherApplication.getLauncherStats().sendWidgetRemoveEvent(packageName);
     }
 
     public void showOutOfSpaceMessage(boolean isHotseatLayout) {
@@ -2604,8 +2593,6 @@ public class Launcher extends Activity
             completeAddAppWidget(appWidgetId, info.container, info.screenId, boundWidget,
                     appWidgetInfo);
             mWorkspace.removeExtraEmptyScreenDelayed(true, onComplete, delay, false);
-            String packageName = appWidgetInfo.providerInfo.packageName;
-            LauncherApplication.getLauncherStats().sendWidgetAddEvent(packageName);
         }
     }
 
@@ -2867,13 +2854,6 @@ public class Launcher extends Activity
             onClickAllAppsButton(v);
         } else if (tag instanceof AppInfo) {
             startAppShortcutOrInfoActivity(v);
-            LauncherApplication.getLauncherStats().sendAppLaunchEvent(
-                    LauncherStats.ORIGIN_APPDRAWER, ((AppInfo)tag).componentName.getPackageName());
-            String packageName = ((AppInfo)tag).getIntent().getComponent().getPackageName();
-            if (LauncherStats.SETTINGS_PACKAGE_NAME.equals(packageName)) {
-                LauncherApplication.getLauncherStats()
-                        .sendSettingsOpenedEvent(LauncherStats.ORIGIN_APPDRAWER);
-            }
         } else if (tag instanceof LauncherAppWidgetInfo) {
             if (v instanceof PendingAppWidgetHostView) {
                 onClickPendingWidget((PendingAppWidgetHostView) v);
@@ -3022,13 +3002,6 @@ public class Launcher extends Activity
 
         // Start activities
         startAppShortcutOrInfoActivity(v);
-        String packageName = intent.getComponent().getPackageName();
-        LauncherApplication.getLauncherStats().sendAppLaunchEvent(LauncherStats.ORIGIN_HOMESCREEN,
-                packageName);
-        if (LauncherStats.SETTINGS_PACKAGE_NAME.equals(packageName)) {
-            LauncherApplication.getLauncherStats().sendSettingsOpenedEvent(
-                    LauncherStats.ORIGIN_HOMESCREEN);
-        }
 
         if (mLauncherCallbacks != null) {
             mLauncherCallbacks.onClickAppShortcut(v);
@@ -4116,10 +4089,6 @@ public class Launcher extends Activity
             mWorkspace.createCustomContentContainer();
             populateCustomContentContainer();
         }
-
-        LauncherModel.saveWidgetCount(this);
-        LauncherModel.savePageCount(this);
-
     }
 
     @Override
