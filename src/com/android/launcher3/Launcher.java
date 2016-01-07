@@ -5188,6 +5188,14 @@ public class Launcher extends Activity
             AnimationDrawable frameAnimation = (AnimationDrawable) mAnimatedArrow.getBackground();
             frameAnimation.start();
         }
+
+        @Override
+        public void onPanelShown(View panel) {
+            mAnimatedArrow.setBackgroundResource(R.drawable.transition_arrow_reverse);
+
+            AnimationDrawable frameAnimation = (AnimationDrawable) mAnimatedArrow.getBackground();
+            frameAnimation.start();
+        }
     }
 }
 
