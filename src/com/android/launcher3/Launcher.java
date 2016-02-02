@@ -261,7 +261,6 @@ public class Launcher extends Activity
     private DynamicGridSizeFragment mDynamicGridSizeFragment;
 
     private static RemoteFolderManager sRemoteFolderManager;
-    private boolean mRemoteDrawerEnabled;
 
     private AppWidgetManagerCompat mAppWidgetManager;
     private LauncherAppWidgetHost mAppWidgetHost;
@@ -521,8 +520,6 @@ public class Launcher extends Activity
         } else {
             sRemoteFolderManager.onRecreateLauncher(this);
         }
-        mRemoteDrawerEnabled = SettingsProvider.getBoolean(this, null,
-                R.bool.preferences_interface_homescreen_remote_folder_default);
 
         // If we are getting an onCreate, we can actually preempt onResume and unset mPaused here,
         // this also ensures that any synchronous binding below doesn't re-trigger another
@@ -3894,6 +3891,9 @@ public class Launcher extends Activity
      * resumed.
      */
     private void tryAndUpdatePredictedApps() {
+        boolean mRemoteDrawerEnabled = SettingsProvider.getBoolean(this,
+                SettingsProvider.SETTINGS_UI_DRAWER_REMOTE_APPS,
+                R.bool.preferences_interface_drawer_remote_apps_default);
         if (!mRemoteDrawerEnabled) {
             if (mLauncherCallbacks != null) {
                 List<ComponentKey> apps = mLauncherCallbacks.getPredictedApps();
