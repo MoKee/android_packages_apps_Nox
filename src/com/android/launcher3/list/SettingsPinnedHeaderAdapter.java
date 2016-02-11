@@ -110,9 +110,8 @@ public class SettingsPinnedHeaderAdapter extends PinnedHeaderListAdapter {
                         current = SettingsProvider.getBoolean(mContext,
                                 SettingsProvider.SETTINGS_UI_HOMESCREEN_HIDE_ICON_LABELS,
                                 R.bool.preferences_interface_homescreen_hide_icon_labels_default);
-                        state = current ? res.getString(R.string.icon_labels_hide)
-                                : res.getString(R.string.icon_labels_show);
-                        setStateText(stateView, settingSwitch, state);
+                        // Reversed logic here. Boolean is hideLabels, where setting is show labels
+                        setSettingSwitch(stateView, settingSwitch, !current);
                         break;
                     case 2:
                         current = SettingsProvider.getBoolean(mContext,
@@ -125,14 +124,14 @@ public class SettingsPinnedHeaderAdapter extends PinnedHeaderListAdapter {
                         break;
                     case 4:
                         current = SettingsProvider.getBoolean(mContext,
-                                SettingsProvider.SETTINGS_UI_HOMESCREEN_REMOTE_FOLDER,
-                                R.bool.preferences_interface_homescreen_remote_folder_default);
+                                SettingsProvider.SETTINGS_UI_ALLOW_ROTATION,
+                                R.bool.preferences_interface_allow_rotation);
                         setSettingSwitch(stateView, settingSwitch, current);
                         break;
                     case 5:
                         current = SettingsProvider.getBoolean(mContext,
-                                SettingsProvider.SETTINGS_UI_DRAWER_REMOTE_APPS,
-                                R.bool.preferences_interface_drawer_remote_apps_default);
+                                SettingsProvider.SETTINGS_UI_HOMESCREEN_REMOTE_FOLDER,
+                                R.bool.preferences_interface_homescreen_remote_folder_default);
                         setSettingSwitch(stateView, settingSwitch, current);
                         break;
                     default:
@@ -145,9 +144,8 @@ public class SettingsPinnedHeaderAdapter extends PinnedHeaderListAdapter {
                         current = SettingsProvider.getBoolean(mContext,
                                 SettingsProvider.SETTINGS_UI_DRAWER_HIDE_ICON_LABELS,
                                 R.bool.preferences_interface_drawer_hide_icon_labels_default);
-                        state = current ? res.getString(R.string.icon_labels_hide)
-                                : res.getString(R.string.icon_labels_show);
-                        setStateText(stateView, settingSwitch, state);
+                        // Reversed logic here. Boolean is hideLabels, where setting is show labels
+                        setSettingSwitch(stateView, settingSwitch, !current);
                         break;
                     case 1:
                         current = SettingsProvider.getBoolean(mContext,
@@ -185,6 +183,12 @@ public class SettingsPinnedHeaderAdapter extends PinnedHeaderListAdapter {
                                 R.bool.preferences_interface_drawer_search_default);
                         setSettingSwitch(stateView, settingSwitch, current);
                         break;
+                    case 6:
+                        current = SettingsProvider.getBoolean(mContext,
+                                SettingsProvider.SETTINGS_UI_DRAWER_REMOTE_APPS,
+                                R.bool.preferences_interface_drawer_remote_apps_default);
+                        setSettingSwitch(stateView, settingSwitch, current);
+                        break;
                     default:
                         hideStates(stateView, settingSwitch);
                 }
@@ -195,12 +199,6 @@ public class SettingsPinnedHeaderAdapter extends PinnedHeaderListAdapter {
                         current = SettingsProvider.getBoolean(mContext,
                                 SettingsProvider.SETTINGS_UI_GENERAL_ICONS_LARGE,
                                 R.bool.preferences_interface_general_icons_large_default);
-                        setSettingSwitch(stateView, settingSwitch, current);
-                        break;
-                    case 2:
-                        current = SettingsProvider.getBoolean(mContext,
-                                SettingsProvider.SETTINGS_UI_ALLOW_ROTATION,
-                                R.bool.preferences_interface_allow_rotation);
                         setSettingSwitch(stateView, settingSwitch, current);
                         break;
                     default:
@@ -284,14 +282,13 @@ public class SettingsPinnedHeaderAdapter extends PinnedHeaderListAdapter {
                             break;
                         case 4:
                             onSettingsBooleanChanged(v,
-                                    SettingsProvider.SETTINGS_UI_HOMESCREEN_REMOTE_FOLDER,
-                                    R.bool.preferences_interface_homescreen_remote_folder_default);
-                            mLauncher.getRemoteFolderManager().onSettingChanged();
+                                    SettingsProvider.SETTINGS_UI_ALLOW_ROTATION,
+                                    R.bool.preferences_interface_allow_rotation);
                             break;
                         case 5:
                             onSettingsBooleanChanged(v,
-                                    SettingsProvider.SETTINGS_UI_DRAWER_REMOTE_APPS,
-                                    R.bool.preferences_interface_drawer_remote_apps_default);
+                                    SettingsProvider.SETTINGS_UI_HOMESCREEN_REMOTE_FOLDER,
+                                    R.bool.preferences_interface_homescreen_remote_folder_default);
                             mLauncher.getRemoteFolderManager().onSettingChanged();
                             break;
                     }
@@ -336,6 +333,12 @@ public class SettingsPinnedHeaderAdapter extends PinnedHeaderListAdapter {
                                     R.bool.preferences_interface_drawer_search_default);
                             mLauncher.reloadAppDrawer();
                             break;
+                        case 6:
+                            onSettingsBooleanChanged(v,
+                                    SettingsProvider.SETTINGS_UI_DRAWER_REMOTE_APPS,
+                                    R.bool.preferences_interface_drawer_remote_apps_default);
+                            mLauncher.getRemoteFolderManager().onSettingChanged();
+                            break;
                     }
                     break;
                 case OverviewSettingsPanel.APP_SETTINGS_POSITION:
@@ -351,11 +354,6 @@ public class SettingsPinnedHeaderAdapter extends PinnedHeaderListAdapter {
                             intent.setClassName(OverviewSettingsPanel.ANDROID_SETTINGS,
                                     OverviewSettingsPanel.ANDROID_PROTECTED_APPS);
                             mLauncher.startActivity(intent);
-                            break;
-                        case 2:
-                            onSettingsBooleanChanged(v,
-                                    SettingsProvider.SETTINGS_UI_ALLOW_ROTATION,
-                                    R.bool.preferences_interface_allow_rotation);
                             break;
                     }
             }
@@ -407,7 +405,7 @@ public class SettingsPinnedHeaderAdapter extends PinnedHeaderListAdapter {
         return !current;
     }
 
-    private void onIconLabelsBooleanChanged(View v, String key, int res) {
+    private boolean onIconLabelsBooleanChanged(View v, String key, int res) {
         boolean current = SettingsProvider.getBoolean(
                 mContext, key, res);
 
@@ -415,10 +413,18 @@ public class SettingsPinnedHeaderAdapter extends PinnedHeaderListAdapter {
         SettingsProvider.putBoolean(mContext, key, !current);
         SettingsProvider.putBoolean(mContext, SettingsProvider.SETTINGS_CHANGED, true);
 
-        String state = current ? mLauncher.getResources().getString(
-                R.string.icon_labels_show) : mLauncher.getResources().getString(
-                R.string.icon_labels_hide);
-        ((TextView) v.findViewById(R.id.item_state)).setText(state);
+        // Reversed logic here. Boolean is hideLabels, where setting is show labels
+        ((Switch)v.findViewById(R.id.setting_switch)).setChecked(current);
+
+        Bundle extras = new Bundle();
+        extras.putBoolean(LauncherSettings.Settings.EXTRA_VALUE, !current);
+
+        mContext.getContentResolver().call(
+                LauncherSettings.Settings.CONTENT_URI,
+                LauncherSettings.Settings.METHOD_SET_BOOLEAN,
+                key, extras);
+
+        return !current;
     }
 
     private void onDrawerStyleBooleanChanged(View v, String key, int res) {
