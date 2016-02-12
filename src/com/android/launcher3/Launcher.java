@@ -279,7 +279,7 @@ public class Launcher extends Activity
     private boolean mHiddenFolderAuth = false;
 
     @Thunk Hotseat mHotseat;
-    private ViewGroup mOverviewPanel;
+    private VerticalSlidingPanel mOverviewPanel;
     private View mDarkPanel;
     OverviewSettingsPanel mOverviewSettingsPanel;
 
@@ -1207,6 +1207,7 @@ public class Launcher extends Activity
                 DynamicGridSizeFragment.DYNAMIC_GRID_SIZE_FRAGMENT);
         if (gridFragment != null) {
             mDynamicGridSizeFragment.setSize();
+            unlockScreenOrientation(true);
         }
     }
 
@@ -1343,15 +1344,6 @@ public class Launcher extends Activity
             // On devices with a locked orientation, we will at least have the allow rotation
             // setting.
             return !Utilities.isRotationAllowedForDevice(this);
-        }
-    }
-
-    protected void startSettings() {
-        Intent settings;
-        settings = new Intent(android.provider.Settings.ACTION_SETTINGS);
-        startActivity(settings);
-        if (mWorkspace.isInOverviewMode()) {
-            mWorkspace.exitOverviewMode();
         }
     }
 
@@ -1519,7 +1511,7 @@ public class Launcher extends Activity
         }
 
         // Setup the overview panel
-        mOverviewPanel = (ViewGroup) findViewById(R.id.overview_panel);
+        mOverviewPanel = (VerticalSlidingPanel) findViewById(R.id.overview_panel);
         mOverviewSettingsPanel = new OverviewSettingsPanel(this);
         mOverviewSettingsPanel.initializeAdapter();
 
@@ -1573,20 +1565,19 @@ public class Launcher extends Activity
         });
         defaultScreenButton.setOnTouchListener(getHapticFeedbackTouchListener());
 
-        final VerticalSlidingPanel verticalSlidingPanel = ((VerticalSlidingPanel) mOverviewPanel);
-        verticalSlidingPanel.setPanelSlideListener(new SettingsPanelSlideListener());
-        verticalSlidingPanel.setEnableDragViewTouchEvents(true);
+        mOverviewPanel.setPanelSlideListener(new SettingsPanelSlideListener());
+        mOverviewPanel.setEnableDragViewTouchEvents(true);
 
         View settingsPaneHeader = mOverviewPanel.findViewById(R.id.settings_pane_header);
         if (settingsPaneHeader != null) {
-            verticalSlidingPanel.setDragView(settingsPaneHeader);
+            mOverviewPanel.setDragView(settingsPaneHeader);
             settingsPaneHeader.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (verticalSlidingPanel.isExpanded()) {
-                        verticalSlidingPanel.collapsePane();
+                    if (mOverviewPanel.isExpanded()) {
+                        mOverviewPanel.collapsePane();
                     } else {
-                        verticalSlidingPanel.expandPane();
+                        mOverviewPanel.expandPane();
                     }
                 }
             });
@@ -1913,7 +1904,7 @@ public class Launcher extends Activity
     public void onClickDynamicGridSizeButton() {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
+        lockScreenOrientation();
         mDynamicGridSizeFragment = new DynamicGridSizeFragment();
         fragmentTransaction.replace(R.id.launcher, mDynamicGridSizeFragment,
                 DynamicGridSizeFragment.DYNAMIC_GRID_SIZE_FRAGMENT);
@@ -1946,6 +1937,9 @@ public class Launcher extends Activity
             reloadLauncher(false, true);
         }
 
+        // Must be called after reload and before settings invalidation.
+        sRemoteFolderManager.onGridSizeChanged();
+
         mOverviewSettingsPanel.notifyDataSetInvalidated();
 
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
@@ -1959,7 +1953,7 @@ public class Launcher extends Activity
         }
         fragmentTransaction
                 .remove(mDynamicGridSizeFragment).commit();
-
+        unlockScreenOrientation(true);
         mDarkPanel.setVisibility(View.VISIBLE);
         ObjectAnimator anim = ObjectAnimator.ofFloat(
                 mDarkPanel, "alpha", 0.3f, 0.0f);
@@ -2806,6 +2800,7 @@ public class Launcher extends Activity
                     DynamicGridSizeFragment.DYNAMIC_GRID_SIZE_FRAGMENT);
             if (gridFragment != null) {
                 mDynamicGridSizeFragment.setSize();
+                unlockScreenOrientation(true);
             }
             else {
                 showWorkspace(true);
@@ -3155,7 +3150,11 @@ public class Launcher extends Activity
         if (mLauncherCallbacks != null) {
             mLauncherCallbacks.onClickSettingsButton(v);
         } else {
-            startSettings();
+            if (mOverviewPanel.isExpanded()) {
+                mOverviewPanel.collapsePane();
+            } else {
+                mOverviewPanel.expandPane();
+            }
         }
     }
 
@@ -5242,6 +5241,9 @@ public class Launcher extends Activity
 
             AnimationDrawable frameAnimation = (AnimationDrawable) mAnimatedArrow.getBackground();
             frameAnimation.start();
+
+            LauncherApplication.getLauncherStats().sendSettingsOpenedEvent(
+                    LauncherStats.ORIGIN_TREB_LONGPRESS);
         }
 
         @Override
