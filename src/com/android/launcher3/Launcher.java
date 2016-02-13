@@ -5241,9 +5241,6 @@ public class Launcher extends Activity
 
             AnimationDrawable frameAnimation = (AnimationDrawable) mAnimatedArrow.getBackground();
             frameAnimation.start();
-
-            LauncherApplication.getLauncherStats().sendSettingsOpenedEvent(
-                    LauncherStats.ORIGIN_TREB_LONGPRESS);
         }
 
         @Override
