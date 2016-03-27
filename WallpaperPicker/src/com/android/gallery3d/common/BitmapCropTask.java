@@ -32,6 +32,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.android.launcher3.settings.SettingsProvider;
+
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -177,12 +179,11 @@ public class BitmapCropTask extends AsyncTask<Void, Void, Boolean> {
             wallpaperManager = WallpaperManager.getInstance(mContext.getApplicationContext());
         }
 
-
         if (mSetWallpaper && mNoCrop) {
             try {
                 InputStream is = regenerateInputStream();
                 if (is != null) {
-                    wallpaperManager.setStream(is);
+                    setWallpaper(wallpaperManager, is);
                     Utils.closeSilently(is);
                 }
             } catch (IOException e) {
@@ -374,7 +375,7 @@ public class BitmapCropTask extends AsyncTask<Void, Void, Boolean> {
                 if (mSetWallpaper && wallpaperManager != null) {
                     try {
                         byte[] outByteArray = tmpOut.toByteArray();
-                        wallpaperManager.setStream(new ByteArrayInputStream(outByteArray));
+                        setWallpaper(wallpaperManager, new ByteArrayInputStream(outByteArray));
                         if (mOnBitmapCroppedHandler != null) {
                             mOnBitmapCroppedHandler.onBitmapCropped(outByteArray);
                         }
@@ -394,6 +395,19 @@ public class BitmapCropTask extends AsyncTask<Void, Void, Boolean> {
     @Override
     protected Boolean doInBackground(Void... params) {
         return cropBitmap();
+    }
+
+    private void setWallpaper(WallpaperManager wallpaperManager, InputStream is) throws IOException {
+        int location = SettingsProvider.getIntCustomDefault(mContext,
+                SettingsProvider.SETTINGS_UI_SET_WALLPAPER_LOCATION, 0);
+        if (location == 0) {
+            wallpaperManager.setStream(is);
+        } else if (location == 1) {
+            wallpaperManager.setKeyguardStream(is);
+        } else {
+            wallpaperManager.setStream(is);
+            wallpaperManager.setKeyguardStream(is);
+        }
     }
 
     @Override

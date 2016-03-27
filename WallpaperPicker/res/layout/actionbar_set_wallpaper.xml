@@ -17,16 +17,28 @@
 ** limitations under the License.
 */
 -->
-
-<com.android.launcher3.AlphaDisableableButton
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/ActionBarSetWallpaperStyle"
-    android:id="@+id/set_wallpaper_button"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingRight="20dp"
-    android:drawableLeft="@drawable/ic_actionbar_accept"
-    android:drawablePadding="8dp"
-    android:gravity="start|center_vertical"
-    android:text="@string/wallpaper_instructions">
-</com.android.launcher3.AlphaDisableableButton>
+    android:orientation="horizontal">
+
+    <Spinner android:id="@+id/wallpaper_screen_chooser"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:entries="@array/wallpaper_screens" />
+
+    <com.android.launcher3.AlphaDisableableButton
+        style="@style/ActionBarSetWallpaperStyle"
+        android:id="@+id/set_wallpaper_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:paddingRight="20dp"
+        android:drawableLeft="@drawable/ic_actionbar_accept"
+        android:drawablePadding="8dp"
+        android:gravity="start|center_vertical"
+        android:text="@*android:string/ok">
+    </com.android.launcher3.AlphaDisableableButton>
+</LinearLayout>

@@ -38,18 +38,22 @@ import android.os.Message;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.gallery3d.common.BitmapCropTask;
 import com.android.gallery3d.common.BitmapUtils;
 import com.android.gallery3d.common.Utils;
 import com.android.launcher3.base.BaseActivity;
+import com.android.launcher3.settings.SettingsProvider;
 import com.android.launcher3.util.Thunk;
 import com.android.launcher3.util.WallpaperUtils;
 import com.android.photos.BitmapRegionTileSource;
 import com.android.photos.BitmapRegionTileSource.BitmapSource;
 import com.android.photos.BitmapRegionTileSource.BitmapSource.InBitmapProvider;
 import com.android.photos.views.TiledImageRenderer.TileSource;
+
+import com.mokee.cloud.misc.CloudUtils;
 
 import java.util.Collections;
 import java.util.Set;
@@ -77,6 +81,7 @@ public class WallpaperCropActivity extends BaseActivity implements Handler.Callb
     protected View mProgressView;
     protected Uri mUri;
     protected View mSetWallpaperButton;
+    protected Spinner mWallpaperScreenChooser;
 
     private HandlerThread mLoaderThread;
     private Handler mLoaderHandler;
@@ -101,8 +106,8 @@ public class WallpaperCropActivity extends BaseActivity implements Handler.Callb
     }
 
     protected void init() {
+        if (!CloudUtils.Verified) return;
         setContentView(R.layout.wallpaper_cropper);
-
         mCropView = (CropView) findViewById(R.id.cropView);
         mProgressView = findViewById(R.id.loading);
 
@@ -119,15 +124,18 @@ public class WallpaperCropActivity extends BaseActivity implements Handler.Callb
         // Show the custom action bar view
         final ActionBar actionBar = getActionBar();
         actionBar.setCustomView(R.layout.actionbar_set_wallpaper);
-        actionBar.getCustomView().setOnClickListener(
+        final Spinner mWallpaperScreenChooser = (Spinner)findViewById(R.id.wallpaper_screen_chooser);
+        mSetWallpaperButton = findViewById(R.id.set_wallpaper_button);
+        mSetWallpaperButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         boolean finishActivityWhenDone = true;
+                        SettingsProvider.putInt(getContext(),
+                                SettingsProvider.SETTINGS_UI_SET_WALLPAPER_LOCATION, mWallpaperScreenChooser.getSelectedItemPosition());
                         cropImageAndSetWallpaper(imageUri, null, finishActivityWhenDone);
                     }
                 });
-        mSetWallpaperButton = findViewById(R.id.set_wallpaper_button);
 
         // Load image in background
         final BitmapRegionTileSource.UriBitmapSource bitmapSource =
