@@ -69,6 +69,7 @@
     <uses-permission android:name="com.android.launcher3.permission.RECEIVE_LAUNCH_BROADCASTS" />
     <uses-permission android:name="com.android.launcher3.permission.RECEIVE_FIRST_LOAD_BROADCAST" />
     <uses-permission android:name="mokee.permission.PROTECTED_APP" />
+    <uses-permission android:name="android.permission.SET_KEYGUARD_WALLPAPER" />
 
     <application
         android:allowBackup="@bool/enable_backup"
