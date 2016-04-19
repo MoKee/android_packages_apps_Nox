@@ -48,11 +48,7 @@ LOCAL_AAPT_FLAGS := \
 #LOCAL_SDK_VERSION := current
 LOCAL_PACKAGE_NAME := Nox
 LOCAL_PRIVILEGED_MODULE := true
-
-# Sign the package when not using test-keys
-ifneq ($(DEFAULT_SYSTEM_DEV_CERTIFICATE),build/target/product/security/testkey)
-LOCAL_CERTIFICATE := cyngn-app
-endif
+#LOCAL_CERTIFICATE := shared
 
 LOCAL_AAPT_FLAGS += --rename-manifest-package com.mokee.nox
 
