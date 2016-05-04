@@ -28,7 +28,6 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     android-support-v7-recyclerview \
     org.mokee.platform.internal
 
-
 LOCAL_SRC_FILES := $(call all-java-files-under, src) \
     $(call all-java-files-under, WallpaperPicker/src) \
     $(call all-proto-files-under, protos)
@@ -88,7 +87,6 @@ LOCAL_IS_HOST_MODULE := true
 LOCAL_JAR_MANIFEST := util/etc/manifest.txt
 
 include $(BUILD_HOST_JAVA_LIBRARY)
-
 
 #
 # Protocol Buffer Debug Utility Wrapper Script
