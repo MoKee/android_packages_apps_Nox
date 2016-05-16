@@ -4540,6 +4540,7 @@ public class Launcher extends Activity
         mWorkspace.stripEmptyScreens();
 
         sRemoteFolderManager.bindFinished();
+        bindSearchProviderChanged();
     }
 
     private void sendLoadingCompleteBroadcastIfNecessary() {
