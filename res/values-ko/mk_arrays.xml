@@ -16,8 +16,8 @@
 -->
 <resources>
   <string-array name="wallpaper_screens">
-    <item>Layar utama</item>
-    <item>Layar kunci</item>
-    <item>Layar utama dan Layar kunci</item>
+    <item>홈 화면</item>
+    <item>잠금화면</item>
+    <item>홈과 잠금 화면</item>
   </string-array>
 </resources>
