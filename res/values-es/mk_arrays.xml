@@ -17,7 +17,7 @@
 <resources>
   <string-array name="wallpaper_screens">
     <item>Pantalla de inicio</item>
-    <item>Lock screen</item>
-    <item>Home and lock screens</item>
+    <item>Bloqueo de pantalla</item>
+    <item>Pantallas de inicio y de bloqueo</item>
   </string-array>
 </resources>
