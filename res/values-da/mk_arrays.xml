@@ -17,7 +17,7 @@
 <resources>
   <string-array name="wallpaper_screens">
     <item>Startskærm</item>
-    <item>Skærmlås</item>
-    <item>Home and lock screens</item>
+    <item>Låseskærm</item>
+    <item>Start- og låseskærme</item>
   </string-array>
 </resources>
