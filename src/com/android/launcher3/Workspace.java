@@ -1386,7 +1386,7 @@ public class Workspace extends PagedView
         float mAnimationStartOffset;
         private final int ANIMATION_DURATION = 250;
         // Don't use all the wallpaper for parallax until you have at least this many pages
-        private final int MIN_PARALLAX_PAGE_SPAN = 3;
+        private final int MIN_PARALLAX_PAGE_SPAN = 1;
         int mNumScreens;
         boolean mCompletedInitialOffset;
 
@@ -1455,8 +1455,9 @@ public class Workspace extends PagedView
                 if (mIsRtl) {
                     return 1 - 1.0f/mNumPagesForWallpaperParallax;
                 }
-                return 0;
+                return 0.5f;
             }
+            if (!mScrollWallpaper) return 0.5f;
 
             // Exclude the leftmost page
             int emptyExtraPages = numEmptyScreensToIgnore();
@@ -4662,9 +4663,13 @@ public class Workspace extends PagedView
                 SettingsProvider.SETTINGS_UI_HOMESCREEN_SCROLLING_WALLPAPER_SCROLL,
                 R.bool.preferences_interface_homescreen_scrolling_wallpaper_scroll_default);
         if (!mScrollWallpaper) {
-            if (mWindowToken != null) mWallpaperManager.setWallpaperOffsets(mWindowToken, 0f, 0.5f);
+            if (mWindowToken != null) mWallpaperManager.setWallpaperOffsets(mWindowToken, 0.5f, 0.5f);
         } else {
-            mWallpaperOffset.syncWithScroll();
+            if (getChildCount() == 1) {
+                if (mWindowToken != null) mWallpaperManager.setWallpaperOffsets(mWindowToken, 0.5f, 0.5f);
+            } else {
+                mWallpaperOffset.syncWithScroll();
+            }
         }
     }
 
