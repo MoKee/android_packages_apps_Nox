@@ -1386,7 +1386,7 @@ public class Workspace extends PagedView
         float mAnimationStartOffset;
         private final int ANIMATION_DURATION = 250;
         // Don't use all the wallpaper for parallax until you have at least this many pages
-        private final int MIN_PARALLAX_PAGE_SPAN = 3;
+        private final int MIN_PARALLAX_PAGE_SPAN = 1;
         int mNumScreens;
 
         public WallpaperOffsetInterpolator() {
