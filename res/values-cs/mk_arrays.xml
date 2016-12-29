@@ -17,7 +17,7 @@
 <resources>
   <string-array name="wallpaper_screens">
     <item>Domovská obrazovka</item>
-    <item>Zámek displeje</item>
+    <item>Zámek obrazovky</item>
     <item>Domovská a uzamykací obrazovka</item>
   </string-array>
 </resources>
