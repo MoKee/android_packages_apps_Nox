@@ -17,7 +17,7 @@
 <resources>
   <string-array name="wallpaper_screens">
     <item>Başlangıç ekranı</item>
-    <item>Kilit ekranı</item>
+    <item>Ekranı Kilitle</item>
     <item>Ev ve kilit ekranlar</item>
   </string-array>
 </resources>
