@@ -18,6 +18,6 @@
   <string-array name="wallpaper_screens">
     <item>Layar utama</item>
     <item>Layar kunci</item>
-    <item>Layar utama dan Layar kunci</item>
+    <item>Layar utama dan layar kunci</item>
   </string-array>
 </resources>
