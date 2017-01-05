@@ -18,6 +18,6 @@
   <string-array name="wallpaper_screens">
     <item>Schermata Home</item>
     <item>Schermata di sblocco</item>
-    <item>Schermate Home e sblocco</item>
+    <item>Schermate home e blocco</item>
   </string-array>
 </resources>
