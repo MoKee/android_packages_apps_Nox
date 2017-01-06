@@ -39,7 +39,6 @@ public final class SettingsProvider {
     public static final String SETTINGS_UI_DRAWER_SEARCH = "ui_drawer_search";
     public static final String SETTINGS_UI_GENERAL_ICONS_LARGE = "ui_general_icons_large";
     public static final String SETTINGS_UI_ALLOW_ROTATION = "ui_allow_rotation";
-    public static final String SETTINGS_UI_SET_WALLPAPER_LOCATION = "ui_set_wallpaper_location";
 
     public static SharedPreferences get(Context context) {
         return context.getSharedPreferences(SETTINGS_KEY, Context.MODE_PRIVATE);

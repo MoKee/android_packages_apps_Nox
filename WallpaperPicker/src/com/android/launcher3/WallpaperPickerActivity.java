@@ -69,20 +69,16 @@ import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.gallery3d.common.BitmapCropTask;
 import com.android.gallery3d.common.BitmapUtils;
 import com.android.gallery3d.common.Utils;
-import com.android.launcher3.settings.SettingsProvider;
 import com.android.launcher3.util.Thunk;
 import com.android.launcher3.util.WallpaperUtils;
 import com.android.photos.BitmapRegionTileSource;
 import com.android.photos.BitmapRegionTileSource.BitmapSource;
 import com.android.photos.views.TiledImageRenderer.TileSource;
-
-import com.mokee.cloud.misc.CloudUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -315,21 +311,7 @@ public class WallpaperPickerActivity extends WallpaperCropActivity {
         @Override
         public void onSave(WallpaperPickerActivity a) {
             try {
-                int location = SettingsProvider.getIntCustomDefault(a.getContext(),
-                        SettingsProvider.SETTINGS_UI_SET_WALLPAPER_LOCATION, 0);
-                switch (location) {
-                    case 0:
-                        WallpaperManager.getInstance(a.getContext()).clear();
-                        break;
-                    case 1:
-                        WallpaperManager.getInstance(a.getContext()).clearKeyguardWallpaper(true);
-                        break;
-                    case 2:
-                        WallpaperManager.getInstance(a.getContext()).clear();
-                        WallpaperManager.getInstance(a.getContext()).clearKeyguardWallpaper(true);
-                        break;
-
-                }
+                WallpaperManager.getInstance(a.getContext()).clear();
                 a.setResult(Activity.RESULT_OK);
             } catch (IOException e) {
                 Log.w("Setting wallpaper to default threw exception", e);
@@ -392,7 +374,6 @@ public class WallpaperPickerActivity extends WallpaperCropActivity {
 
     // called by onCreate; this is subclassed to overwrite WallpaperCropActivity
     protected void init() {
-        if (!CloudUtils.Verified) return;
         setContentView(R.layout.wallpaper_picker);
 
         mCropView = (CropView) findViewById(R.id.cropView);
@@ -566,9 +547,7 @@ public class WallpaperPickerActivity extends WallpaperCropActivity {
         // Show the custom action bar view
         final ActionBar actionBar = getActionBar();
         actionBar.setCustomView(R.layout.actionbar_set_wallpaper);
-        final Spinner mWallpaperScreenChooser = (Spinner)findViewById(R.id.wallpaper_screen_chooser);
-        mSetWallpaperButton = findViewById(R.id.set_wallpaper_button);
-        mSetWallpaperButton.setOnClickListener(
+        actionBar.getCustomView().setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -577,8 +556,7 @@ public class WallpaperPickerActivity extends WallpaperCropActivity {
                             // Prevent user from selecting any new tile.
                             mWallpaperStrip.setVisibility(View.GONE);
                             actionBar.hide();
-                            SettingsProvider.putInt(getContext(),
-                                    SettingsProvider.SETTINGS_UI_SET_WALLPAPER_LOCATION, mWallpaperScreenChooser.getSelectedItemPosition());
+
                             WallpaperTileInfo info = (WallpaperTileInfo) mSelectedTile.getTag();
                             info.onSave(WallpaperPickerActivity.this);
                         } else {
@@ -588,6 +566,7 @@ public class WallpaperPickerActivity extends WallpaperCropActivity {
                         }
                     }
                 });
+        mSetWallpaperButton = findViewById(R.id.set_wallpaper_button);
 
         // CAB for deleting items
         mActionModeCallback = new ActionMode.Callback() {
