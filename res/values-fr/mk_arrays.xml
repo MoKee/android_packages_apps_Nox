@@ -18,6 +18,6 @@
   <string-array name="wallpaper_screens">
     <item>Écran d\'accueil</item>
     <item>Écran de verrouillage</item>
-    <item>\"Écrans d\'accueil et de verrouillage\"</item>
+    <item>Écrans d\'accueil et de verrouillage</item>
   </string-array>
 </resources>
