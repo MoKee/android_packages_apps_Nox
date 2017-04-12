@@ -16,8 +16,8 @@
 -->
 <resources>
   <string-array name="wallpaper_screens">
-    <item>Начален екран</item>
-    <item>Екран за заключване</item>
-    <item>Начален и заключен екрани</item>
+    <item>الشاشة الرئيسية</item>
+    <item>Lock screen</item>
+    <item>Home and lock screens</item>
   </string-array>
 </resources>
