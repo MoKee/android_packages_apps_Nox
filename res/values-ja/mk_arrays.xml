@@ -18,6 +18,6 @@
   <string-array name="wallpaper_screens">
     <item>ホーム画面</item>
     <item>ロックスクリーン</item>
-    <item>Home and lock screens</item>
+    <item>ホーム画面とロック画面</item>
   </string-array>
 </resources>
