@@ -46,7 +46,7 @@ LOCAL_AAPT_FLAGS := \
 #LOCAL_SDK_VERSION := current
 LOCAL_PACKAGE_NAME := Nox
 LOCAL_PRIVILEGED_MODULE := true
-#LOCAL_CERTIFICATE := shared
+LOCAL_CERTIFICATE := platform
 
 LOCAL_AAPT_FLAGS += --rename-manifest-package com.mokee.nox
 
