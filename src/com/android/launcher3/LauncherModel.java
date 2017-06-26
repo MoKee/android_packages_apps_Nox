@@ -63,9 +63,9 @@ import com.android.launcher3.util.CursorIconInfo;
 import com.android.launcher3.util.LongArrayMap;
 import com.android.launcher3.util.ManagedProfileHeuristic;
 import com.android.launcher3.util.Thunk;
-import mokee.providers.MKSettings;
+import com.mokee.nox.settings.SettingsProvider;
 
-import com.android.launcher3.settings.SettingsProvider;
+import mokee.providers.MKSettings;
 
 import java.lang.ref.WeakReference;
 import java.net.URISyntaxException;

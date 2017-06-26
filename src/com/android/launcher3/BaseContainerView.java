@@ -26,7 +26,7 @@ import android.view.ViewStub;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.launcher3.settings.SettingsProvider;
+import com.mokee.nox.settings.SettingsProvider;
 
 /**
  * A base container view, which supports resizing.
